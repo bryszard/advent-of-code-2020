@@ -8,7 +8,6 @@ class Day16
       ticket.select { |key, _| key.start_with?("departure") }.values.map(&:to_i).inject(1) { |aggr, val| aggr * val }
     end
 
-
     def decode_your_ticket(input)
       rules, your_data, tickets = input.split("\n\n")
       valid_tickets = select_valid(rules, tickets)
