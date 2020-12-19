@@ -1,6 +1,6 @@
 RSpec.describe Day3 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day3-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day3-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day3-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day3-2.txt", __dir__)) }
 
   describe ".count_trees" do
     subject(:count_trees) { described_class.count_trees(input) }

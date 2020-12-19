@@ -1,5 +1,5 @@
 RSpec.describe Day5 do
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day5-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day5-1.txt", __dir__)) }
 
   describe ".calculate_seat_code" do
     subject(:calculate_seat_code) { described_class.calculate_seat_code(input) }

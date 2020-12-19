@@ -4,7 +4,7 @@ RSpec.describe Day2 do
     "1-3 b: cdefg\n" \
     "2-9 c: ccccccccc"
   end
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day2-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day2-1.txt", __dir__)) }
 
   describe ".count_valid" do
     subject(:count_valid) { described_class.count_valid(input) }

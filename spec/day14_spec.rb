@@ -1,6 +1,6 @@
 RSpec.describe Day14 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day14-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day14-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day14-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day14-2.txt", __dir__)) }
 
   describe ".sum_remaining_values" do
     subject(:sum_remaining_values) { described_class.sum_remaining_values(input) }

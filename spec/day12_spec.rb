@@ -1,6 +1,6 @@
 RSpec.describe Day12 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day12-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day12-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day12-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day12-2.txt", __dir__)) }
 
   describe ".calculate_final_distance" do
     subject(:calculate_final_distance) { described_class.calculate_final_distance(input) }

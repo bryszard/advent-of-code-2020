@@ -1,7 +1,7 @@
 RSpec.describe Day16 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day16-1.txt", __dir__)) }
-  let(:short_input_2) { File.read(File.expand_path("fixtures/day16-3.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day16-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day16-1.txt", __dir__)) }
+  let(:short_input_2) { File.read(File.expand_path("fixtures/older/day16-3.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day16-2.txt", __dir__)) }
 
   describe ".count_invalid_values" do
     subject(:count_invalid_values) { described_class.count_invalid_values(input) }

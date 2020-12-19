@@ -1,6 +1,6 @@
 RSpec.describe Day4 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day4-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day4-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day4-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day4-2.txt", __dir__)) }
 
   describe ".count_passports_with_required_fields" do
     subject(:count_passports_with_required_fields) { described_class.count_passports_with_required_fields(input) }

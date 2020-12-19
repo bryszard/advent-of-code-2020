@@ -1,6 +1,6 @@
 RSpec.describe Day9 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day9-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day9-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day9-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day9-2.txt", __dir__)) }
 
   describe ".find_invalid_encoding" do
     subject(:find_invalid) { described_class.find_invalid_encoding(input, preamble_size) }

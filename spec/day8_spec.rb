@@ -1,6 +1,6 @@
 RSpec.describe Day8 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day8-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day8-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day8-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day8-2.txt", __dir__)) }
 
   describe ".acc_value_before_infinite_loop" do
     subject(:calculate) { described_class.acc_value_before_infinite_loop(input) }

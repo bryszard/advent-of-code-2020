@@ -1,6 +1,6 @@
 RSpec.describe Day13 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day13-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day13-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day13-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day13-2.txt", __dir__)) }
 
   describe ".find_earliest_bus" do
     subject(:find_earliest_bus) { described_class.find_earliest_bus(input) }

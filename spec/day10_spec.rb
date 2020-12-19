@@ -1,7 +1,7 @@
 RSpec.describe Day10 do
-  let(:short_input_1) { File.read(File.expand_path("fixtures/day10-1.txt", __dir__)) }
-  let(:short_input_2) { File.read(File.expand_path("fixtures/day10-2.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day10-3.txt", __dir__)) }
+  let(:short_input_1) { File.read(File.expand_path("fixtures/older/day10-1.txt", __dir__)) }
+  let(:short_input_2) { File.read(File.expand_path("fixtures/older/day10-2.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day10-3.txt", __dir__)) }
 
   describe ".calculate_jolt_differences" do
     subject(:calculate_jolt_differences) { described_class.calculate_jolt_differences(input) }

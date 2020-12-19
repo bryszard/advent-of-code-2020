@@ -1,6 +1,6 @@
 RSpec.describe Day11 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day11-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day11-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day11-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day11-2.txt", __dir__)) }
 
   describe ".calculate_occupied_seats" do
     subject(:calculate_occupied_seats) { described_class.calculate_occupied_seats(input) }

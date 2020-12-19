@@ -1,6 +1,6 @@
 RSpec.describe Day17_1 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day17-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day17-2.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day17-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day17-2.txt", __dir__)) }
 
   describe ".simulate_six_cycles" do
     subject(:simulate_six_cycles) { described_class.simulate_six_cycles(input) }

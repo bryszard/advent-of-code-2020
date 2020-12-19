@@ -1,7 +1,7 @@
 RSpec.describe Day7 do
-  let(:short_input) { File.read(File.expand_path("fixtures/day7-1.txt", __dir__)) }
-  let(:puzzle_input) { File.read(File.expand_path("fixtures/day7-2.txt", __dir__)) }
-  let(:additional_short_input) { File.read(File.expand_path("fixtures/day7-3.txt", __dir__)) }
+  let(:short_input) { File.read(File.expand_path("fixtures/older/day7-1.txt", __dir__)) }
+  let(:puzzle_input) { File.read(File.expand_path("fixtures/older/day7-2.txt", __dir__)) }
+  let(:additional_short_input) { File.read(File.expand_path("fixtures/older/day7-3.txt", __dir__)) }
 
   describe ".calculate_outermost_options" do
     subject(:calculate) { described_class.calculate_outermost_options(input) }
