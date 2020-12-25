@@ -28,9 +28,17 @@ RSpec.describe Day20 do
     end
 
     context "when puzzle input" do
+      let(:puzzle_input) { File.read(File.expand_path("fixtures/day20-2.txt", __dir__)) }
       let(:input) { puzzle_input }
 
-      it { is_expected.to eq(2470) } # 2455 too high, 2410, 2440, 2425, 2395 incorrect
+      it { is_expected.to eq(2155) }
+    end
+
+    context "when puzzle input 2" do
+      let(:puzzle_input) { File.read(File.expand_path("fixtures/day20-4.txt", __dir__)) }
+      let(:input) { puzzle_input }
+
+      it { is_expected.to eq(2304) }
     end
   end
 
@@ -42,6 +50,12 @@ RSpec.describe Day20 do
       subject(:find_monsters) { described_object.call }
 
       it { is_expected.to eq(2) }
+
+      context "when different image" do
+        let(:image) { File.read(File.expand_path("fixtures/day20-5.txt", __dir__)) }
+
+        it { is_expected.to eq(25) }
+      end
     end
   end
 end

@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
 class Day20
+  MONSTER = [
+    "                  # ",
+    "#    ##    ##    ###",
+    " #  #  #  #  #  #   "
+  ]
+
   class << self
     def calculate_non_monster_hashes(input)
       image = generate_image_from_puzzles(input)
       monsters = MonsterFinder.new(image).call
+      monster_size = MONSTER.map { _1.count("#") }.sum
 
-      image.count("#") - (monsters * 15)
+      image.count("#") - (monsters * monster_size)
     end
 
     def generate_image_from_puzzles(input)
@@ -60,34 +67,15 @@ class Day20
   end
 
   class MonsterFinder
-    MONSTER = [
-      "                  # ",
-      "#    ##    ##    ###",
-      " #  #  #  #  #  #   "
-    ]
-    MONSTER_PATTERN = /.{18}\#.+\n\#.{4}\#{2}.{4}\#{2}.{4}\#{3}.+\n.{1}\#{1}.{2}\#{1}.{2}\#{1}.{2}\#{1}.{2}\#{1}.{2}\#{1}.{3}/
-
-    EXAMPLE_PATTERN = /\#{2}.+\n\.{2}.+/
+    MONSTER_PATTERN = /.{18}\#.+\n\#.{4}\#{2}.{4}\#{2}.{4}\#{3}.+\n.{1}\#{1}.{2}\#{1}.{2}\#{1}.{2}\#{1}.{2}\#{1}.{2}\#{1}.{3}.+/
 
     def initialize(image)
       @image = image
     end
 
     def call
-      count = 0
-      actions = [
-        :keep,
-        :flip,
-        :rotate_left,
-        :rotate_right,
-        :rotate_twice_left,
-        :flip_and_rotate_left,
-        :flip_and_rotate_right,
-        :flip_and_rotate_twice_left
-      ]
-
-      actions.map do |transformation|
-        break if count > 0
+      monsters_in_images = ImageConverter::TRANSFORMATIONS.map do |transformation|
+        internal_count = 0
 
         transformed = ImageConverter.send(transformation, image.split("\n"))
         row_size = transformed.first.size
@@ -95,11 +83,13 @@ class Day20
         (row_size - 20).times do |n|
           res = transformed.map { |row| row[n..-1] }.join("\n").scan(MONSTER_PATTERN)
 
-          count += res.count
+          internal_count += res.count
         end
+
+        internal_count
       end
 
-      count
+      monsters_in_images.max
     end
 
     private
@@ -108,6 +98,17 @@ class Day20
   end
 
   class ImageConverter
+    TRANSFORMATIONS = [
+      :keep,
+      :flip,
+      :rotate_left,
+      :rotate_right,
+      :rotate_twice_left,
+      :flip_and_rotate_left,
+      :flip_and_rotate_right,
+      :flip_and_rotate_twice_left
+    ]
+
     class << self
       def keep(image)
         image
@@ -194,7 +195,8 @@ class Day20
 
   class TransformationsAssigner
     def initialize(tiles, ordered_puzzles)
-      @edges = parse_tiles(tiles)
+      @edges = parse_edges(tiles)
+      @tiles = parse_tiles(tiles)
       @ordered_puzzles = ordered_puzzles
     end
 
@@ -236,72 +238,25 @@ class Day20
     end
 
     def find_transformation(cell, adjacent_edges)
-      edges_for_puzzle = edges[cell]
-      top_edge = edges_for_puzzle[0]
+      tile = tiles[cell]
 
-      if !adjacent_edges.index(top_edge) && !adjacent_edges.index(top_edge.reverse)
-        check_bottom_edge(cell, adjacent_edges)
-      elsif adjacent_edges.index(top_edge.reverse)
-        check_top_reverse(cell, adjacent_edges)
-      elsif adjacent_edges.index(top_edge).eql?(0)
-        :keep
-      elsif adjacent_edges.index(top_edge).eql?(1)
-        :rotate_right
-      elsif adjacent_edges.index(top_edge).eql?(2)
-        :rotate_twice_left
-      elsif adjacent_edges.index(top_edge).eql?(3)
-        :rotate_left
+      ImageConverter::TRANSFORMATIONS.find do |action|
+        transformed = ImageConverter.send(action, tile)
+        rotated = transformed.map(&:chars).transpose.map(&:join)
+        new_edges = [
+          transformed.first,
+          rotated.last,
+          transformed.last,
+          rotated.first
+        ]
+
+        adjacent_edges.map.with_index do |edge, index|
+          edge.nil? || edge == new_edges[index] || edge == new_edges[index].reverse
+        end.all?
       end
     end
 
-    def check_bottom_edge(cell, adjacent_edges)
-      edges_for_puzzle = edges[cell]
-      bottom_edge = edges_for_puzzle[2]
-
-      if adjacent_edges.index(bottom_edge.reverse)
-        check_bottom_reverse(cell, adjacent_edges)
-      elsif adjacent_edges.index(bottom_edge).eql?(0)
-        :rotate_twice_left
-      elsif adjacent_edges.index(bottom_edge).eql?(2)
-        :keep
-      elsif adjacent_edges.index(bottom_edge).eql?(3)
-        :rotate_right
-      elsif adjacent_edges.index(bottom_edge).eql?(1)
-        :rotate_left
-      end
-    end
-
-    def check_top_reverse(cell, adjacent_edges)
-      edges_for_puzzle = edges[cell]
-      top_reverse = edges_for_puzzle[0].reverse
-
-      if adjacent_edges.index(top_reverse).eql?(1)
-        :flip_and_rotate_left
-      elsif adjacent_edges.index(top_reverse).eql?(0)
-        :flip_and_rotate_twice_left
-      elsif adjacent_edges.index(top_reverse).eql?(3)
-        :flip_and_rotate_right
-      elsif adjacent_edges.index(top_reverse).eql?(2)
-        :flip
-      end
-    end
-
-    def check_bottom_reverse(cell, adjacent_edges)
-      edges_for_puzzle = edges[cell]
-      bottom_reverse = edges_for_puzzle[2].reverse
-
-      if adjacent_edges.index(bottom_reverse).eql?(3)
-        :flip_and_rotate_left
-      elsif adjacent_edges.index(bottom_reverse).eql?(2)
-        :flip_and_rotate_twice_left
-      elsif adjacent_edges.index(bottom_reverse).eql?(1)
-        :flip_and_rotate_right
-      elsif adjacent_edges.index(bottom_reverse).eql?(0)
-        :flip
-      end
-    end
-
-    def parse_tiles(tiles)
+    def parse_edges(tiles)
       tiles.to_h do |tile|
         rows = tile.split("\n")
         header = rows[0]
@@ -319,6 +274,16 @@ class Day20
         ]
       end
     end
+
+    def parse_tiles(tiles)
+      tiles.to_h do |tile|
+        rows = tile.split("\n")
+        header = rows[0]
+        puzzle = rows[1..-1]
+
+        [header[/\d+/].to_i, puzzle]
+      end
+    end
   end
 
   class PuzzleArranger
@@ -332,8 +297,7 @@ class Day20
 
       fill_next(0, 0)
 
-      # Not sure if I need to transpose, but it worked with example
-      canvas.transpose
+      canvas
     end
 
     private
